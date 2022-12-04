@@ -1,14 +1,26 @@
+if (!localStorage.getItem('page')) {
+	localStorage.setItem('page', 1)
+}
+const listPaginationLinks = document.querySelectorAll('.pagination-link')
+listPaginationLinks.forEach(item => {
+	if (item.textContent !== 'Назад') {
+		if (item.textContent !== 'Вперед') {
+			if (item.textContent === localStorage.getItem('page')) {
+				item.classList.add('pagination-active')
+			}
+		}
+	}
+})
+
 const API_KEY = '0edcf27d-cd4f-4f58-aedc-0c6ec6c354aa'
-const URL_TOP_250_BEST_FILMS = 'https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=1'
+const URL_TOP_250_BEST_FILMS =
+	'https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page='
 const URL_ID = 'https://kinopoiskapiunofficial.tech/api/v2.2/films/'
 const movies = document.querySelector('.movies')
 const modal = document.querySelector('.popup')
-const modalClose = document.querySelector('.popup-close')
 const modalBody = document.querySelector('.popup-body')
 
-
 function ShowMovies(data) {
-
 	movies.innerHTML = ''
 	data.films.forEach(movie => {
 		let ratingColor
@@ -21,18 +33,37 @@ function ShowMovies(data) {
 		}
 
 		const movieElement = document.createElement('div')
-		movieElement.classList.add('movie', 'flex', 'flex-col', 'bg-[#161c29]', 'gap-2', 'rounded', 'p-2', 'opacity-80', 'hover:opacity-60', 'cursor-pointer', 'relative')
+		movieElement.classList.add(
+			'movie',
+			'flex',
+			'flex-col',
+			'bg-[#161c29]',
+			'gap-2',
+			'rounded',
+			'p-2',
+			'opacity-80',
+			'hover:opacity-60',
+			'cursor-pointer',
+			'relative'
+		)
 		movieElement.setAttribute('id', movie.filmId)
-		movieElement.innerHTML = `<img src='${movie.posterUrl}' alt='${movie.nameRu}' class='rounded'>
+		movieElement.innerHTML = `<img src='${movie.posterUrl}' alt='${
+			movie.nameRu
+		}' class='rounded'>
 \t\t\t\t<h4 class='text-slate-200'>${movie.nameRu}</h4>
-\t\t\t\t<span class='text-main-blue text-sm'>${movie.genres.map((genre) => ` ${genre.genre}`)}</span>
-\t\t\t\t<div class='absolute top-4 left-4 ${ratingColor} md:p-2 p-1 rounded'>${movie.rating}</div>`
+\t\t\t\t<span class='text-main-blue text-sm'>${movie.genres.map(
+			genre => ` ${genre.genre}`
+		)}</span>
+\t\t\t\t<div class='absolute top-4 left-4 ${ratingColor} md:p-2 p-1 rounded'>${
+			movie.rating
+		}</div>`
 		movies.append(movieElement)
 	})
 }
 
-async function moviess(url) {
-	const resp = await fetch(url, {
+async function editPageWithMovies(url, id) {
+	let urlId = url + id
+	const resp = await fetch(urlId, {
 		headers: {
 			'Content-Type': 'application/json',
 			'X-API-KEY': API_KEY
@@ -44,9 +75,7 @@ async function moviess(url) {
 	ShowMovies(respData)
 }
 
-moviess(URL_TOP_250_BEST_FILMS)
-
-movies.addEventListener('click', (event) => {
+movies.addEventListener('click', event => {
 	if (event.target.closest('.movie')) {
 		modal.classList.add('open')
 		document.body.style.overflow = 'hidden'
@@ -54,15 +83,14 @@ movies.addEventListener('click', (event) => {
 	}
 })
 
-document.body.addEventListener('click', (event) => {
+document.body.addEventListener('click', event => {
 	if (event.target.closest('.popup-close')) {
 		modal.classList.remove('open')
 		document.body.style.overflow = 'auto'
 	}
 })
 
-
-document.body.addEventListener('click', (event) => {
+document.body.addEventListener('click', event => {
 	if (event.target.closest('.popup-body')) {
 		if (!event.target.closest('.popup-content')) {
 			modal.classList.remove('open')
@@ -70,7 +98,6 @@ document.body.addEventListener('click', (event) => {
 		}
 	}
 })
-
 
 // Инфа о фильме по айди
 async function filmInfoById(id) {
@@ -88,18 +115,21 @@ async function filmInfoById(id) {
 }
 
 function showFilmById(data) {
-	let color;
+	let color
 	let ratingColor = data.ratingKinopoisk
 	let name = data.nameOriginal ? data.nameOriginal : data.nameRu
-	color = ratingColor >= 7 ? 'green' : color = ratingColor < 7 && ratingColor >= 4 ? 'yellow' : 'red'
+	color =
+		ratingColor >= 7
+			? 'green'
+			: (color = ratingColor < 7 && ratingColor >= 4 ? 'yellow' : 'red')
 
 	modalBody.innerHTML = ''
 	const modalContent = document.createElement('div')
 	modalContent.classList.add('popup-content')
-	modalContent.innerHTML = (`
-\t\t\t<button class='popup-close btn self-start'>Закрыть</button>
+	modalContent.innerHTML = `
+\t\t<button class='popup-close btn self-start'>Закрыть</button>
 \t\t\t<div class='film-info w-full'>
-\t\t\t\t<img src='${data.posterUrl}' alt='' class='max-w-[300px] rounded'>
+\t\t\t\t<img src='${data.posterUrl}' alt='' class='max-w-sm rounded'>
 \t\t\t\t<h3 class='text-3xl font-bold'>${data.nameRu}<span>(${data.year})</span></h3>
 \t\t\t\t<div class='text-sm text-gray-500 mr-4'>${name}<span class='ml-2 rounded p-1 ${color} text-white'>${data.ratingKinopoisk}</span></div>
 \t\t\t\t<div class='info-text w-full pt-7'>
@@ -111,8 +141,29 @@ function showFilmById(data) {
 \t\t\t\t\t<h2>Описание фильма</h2>
 \t\t\t\t\t<div class='text-white opacity-60'>${data.description}</div>
 \t\t\t\t</div>
-\t\t\t</div>`)
+\t\t\t</div>`
 	modalBody.append(modalContent)
 }
 
+editPageWithMovies(URL_TOP_250_BEST_FILMS, localStorage.getItem('page'))
 
+const paginationContainer = document.querySelector('.pagination')
+paginationContainer.addEventListener('click', event => {
+	if (event.target.closest('a')) {
+		if (event.target.textContent !== 'Назад') {
+			if (event.target.textContent !== 'Вперед') {
+				localStorage.setItem('page', event.target.textContent)
+			} else {
+				if (!(+localStorage.getItem('page') === 13)) {
+					localStorage.setItem('page', +localStorage.getItem('page') + 1)
+				}
+			}
+		} else {
+			if (!(+localStorage.getItem('page') === 1)) {
+				localStorage.setItem('page', +localStorage.getItem('page') - 1)
+			}
+		}
+	}
+	location.reload()
+	event.preventDefault()
+})
