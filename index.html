@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang='ru'>
+<head>
+	<meta charset='UTF-8' />
+	<meta content='width=device-width, initial-scale=1.0' name='viewport' />
+	<title>KinoCat</title>
+	
+  <script type="module" crossorigin src="/2-javascript-kino-catalog/assets/index.e32c6089.js"></script>
+  <link rel="stylesheet" href="/2-javascript-kino-catalog/assets/index.1ed635f2.css">
+</head>
+<body class='text-white bg-[#111827] py-4 relative'>
+<div class='container my-x mx-auto px-4'>
+	<div class='flex justify-between py-4 items-center max-sm:flex-col max-sm:gap-4'>
+		<h2 class='font-medium'>KinoCat</h2>
+		<button
+			class=' inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800'>
+  <span
+		class='px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>
+      Случайный фильм
+  </span>
+		</button>
+	</div>
+	<section class='pt-10'>
+		<h3>Топ 250</h3>
+		<div class='movies grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5'>
+			<div
+				class='movie flex flex-col bg-[#161c29] gap-2 rounded p-2 opacity-80 hover:opacity-60 cursor-pointer relative hidden'
+				id='0'>
+				<img alt='${movie.nameRu}' class='rounded' src='/2-javascript-kino-catalog/assets/test.f4ae0312.jpg'>
+				<h4 class='text-slate-200'>${movie.nameRu}</h4>
+				<span class='text-main-blue text-sm'>${movie.genres.map((genre) => ` ${genre.genre}`)}</span>
+				<div class='absolute top-4 left-4 ${ratingColor} md:p-2 p-1 rounded sr-only'>${movie.rating}</div>
+			</div>
+		</div>
+	</section>
+</div>
+<div class='flex justify-center'>
+	<nav class='mt-10 max-w-[640px]'>
+		<ul class='pagination flex flex-wrap h-[100px] justify-center'>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>Назад</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>1</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>2</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>3</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>4</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>5</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>6</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>7</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>8</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>9</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>10</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>11</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>12</a>
+			</li>
+
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>13</a>
+			</li>
+			<li>
+				<a
+					class='pagination-link'
+					href='#'>Вперед</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+<div class='popup overflow-y-auto' id='popup'>
+	<div class='popup-body'>
+	</div>
+</div>
+
+<div class='btn hidden'>qasd</div>
+
+<script crossorigin='anonymous' src='https://kit.fontawesome.com/5a3878ed59.js'></script>
+</body>
+</html>
